@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  solana-frontend:
+    build: ./frontend
+    volumes:
+      - theopetra:/home/app
+    container_name: theopetra-solana-frontend
+    networks:
+      - solana-network
+    ports:
+      - 3000:3000
+    # Needed to keep the container from exiting
+    stdin_open: true
+
+  solana-backend:
+    build: ./backend
+    volumes:
+      - theopetra:/home/app
+    container_name: theopetra-solana-backend
+    networks:
+      - solana-network
+    # Needed to keep the container from exiting
+    stdin_open: true
+
+volumes:
+  theopetra:
+    external: true
+
+networks:
+  solana-network:
+    external: true

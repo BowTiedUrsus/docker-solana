@@ -1,0 +1,30 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json
+{
+  "name": "Solana Dev",
+  "dockerComposeFile": "docker-compose.dev-container.yml",
+  "service": "solana-env",
+  "shutdownAction": "stopCompose",
+  // Open the sub-folder with the source code
+  "workspaceFolder": "/workspace",
+  // Make sure the required docker network and volume exist before creating containers
+  "initializeCommand": ".devcontainer/docker-init.sh solana-env solana-network 172.20.0.1/24",
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "#terminal.integrated.defaultProfile.linux#": "/bin/bash"
+  },
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "ms-azuretools.vscode-docker",
+    "esbenp.prettier-vscode",
+    "matklad.rust-analyzer",
+    "vadimcn.vscode-lldb",
+    "dbaeumer.vscode-eslint",
+    "streetsidesoftware.code-spell-checker"
+  ],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // Left empty because this is handled by docker-compose for individual services,
+  // use this only for additional ports not needed by those services (e.g. ssh)
+  "forwardPorts": [],
+  // Install npm packages to the shared volume before running docker-compose in the container
+  // "postCreateCommand": "cd frontend && yarn install"
+}

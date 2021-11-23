@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  solana-env:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.dev
+    init: true
+    volumes:
+      # Forwards the local Docker socket to the container.
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Use a named volume for the source code
+      - solana-env:/workspace
+      # Persist VS Code extensions between rebuilds
+      - vscode-extensions:/root/.vscode-server/extensions
+      # And/or for VS Code Insiders
+      - vscode-extensions-insiders:/root/.vscode-server-insiders/extensions
+
+    networks:
+      - solana-network
+    container_name: solana-dev-docker
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+volumes:
+  solana-env:
+    external: true
+  vscode-extensions: null
+  vscode-extensions-insiders: null
+
+networks:
+  solana-network:
+    external: true
